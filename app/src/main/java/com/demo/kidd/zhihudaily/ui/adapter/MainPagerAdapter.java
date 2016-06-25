@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.demo.kidd.zhihudaily.Constants;
 import com.demo.kidd.zhihudaily.ui.ListFragment;
@@ -49,5 +51,10 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter{
         date.add(Calendar.DAY_OF_YEAR, -position);
         String showDate = Constants.Dates.cnDateFormat.format(date.getTime());
         return position == 0 ? "今天" : showDate;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((View)object);
     }
 }

@@ -1,6 +1,7 @@
 package com.demo.kidd.zhihudaily;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -17,6 +18,7 @@ public class Constants {
                 new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
         public static final SimpleDateFormat cnDateFormat =
                 new SimpleDateFormat("MM月dd日", Locale.CHINA);
+        public static final Date birthday = new Date(113, 4, 19);
     }
 
     public static final class BundleKeys{

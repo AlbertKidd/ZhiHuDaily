@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.coordinator_layout)
     CoordinatorLayout mCoordinatorLayout;
 
+    MainPagerAdapter pagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +44,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        mToolBar.setTitle(R.string.toolbar_title);
         setSupportActionBar(mToolBar);
 
         mViewPager.setOffscreenPageLimit(7);
-        MainPagerAdapter pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(pagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -55,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
                 prepareIntent(PickDateActivity.class);
             }
         });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        pagerAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -20,8 +20,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.NewsDetailActivity"
-            android:theme="@style/MyTranslucentTheme">
+            android:theme="@style/MyTranslucentTheme"
+            android:parentActivityName=".ui.activity.MainActivity">
 
+        </activity>
+
+        <activity android:name=".ui.activity.PickDateActivity"
+                  android:parentActivityName=".ui.activity.MainActivity">
         </activity>
     </application>
 
