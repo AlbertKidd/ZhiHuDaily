@@ -1,14 +1,15 @@
 package com.demo.kidd.zhihudaily.ui.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.CalendarView;
+import android.widget.FrameLayout;
 
 import com.demo.kidd.zhihudaily.R;
-
-import java.util.Calendar;
-import java.util.Locale;
+import com.demo.kidd.zhihudaily.ui.PickDateFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,10 +19,15 @@ import butterknife.ButterKnife;
  */
 public class PickDateActivity extends AppCompatActivity {
 
+
     @BindView(R.id.date_picker_toolbar)
     Toolbar mDatePickerToolbar;
-    @BindView(R.id.date_picker)
-    CalendarView mDatePicker;
+    @BindView(R.id.fragment_container)
+    FrameLayout mFragmentContainer;
+    @BindView(R.id.pick_date_coordinator_layout)
+    CoordinatorLayout mPickDateCoordinatorLayout;
+
+    private PickDateFragment mDateFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,16 @@ public class PickDateActivity extends AppCompatActivity {
         setSupportActionBar(mDatePickerToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Calendar calendar = Calendar.getInstance(Locale.CHINA);
-        mDatePicker.setMaxDate(calendar.getTimeInMillis());
+        FragmentManager fm = getSupportFragmentManager();
+        mDateFragment = (PickDateFragment) fm.findFragmentById(R.id.fragment_container);
+
+        if (mDateFragment == null) {
+            mDateFragment = new PickDateFragment();
+            fm.beginTransaction().add(R.id.fragment_container, mDateFragment).commit();
+        }
+    }
+
+    public void showSnackBar(int resourceId) {
+        Snackbar.make(mPickDateCoordinatorLayout, resourceId, Snackbar.LENGTH_SHORT).show();
     }
 }

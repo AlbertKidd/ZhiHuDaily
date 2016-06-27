@@ -18,6 +18,8 @@ public class Constants {
                 new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
         public static final SimpleDateFormat cnDateFormat =
                 new SimpleDateFormat("MM月dd日", Locale.CHINA);
+        public static final SimpleDateFormat cnDateFormat_year =
+                new SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA);
         public static final Date birthday = new Date(113, 4, 19);
     }
 

@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 /**
  * Created by niuwa on 2016/6/21.
  */
-public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     private List<Story> mStoryList = new ArrayList<>();
 
     @BindView(R.id.swipe_refresh_layout)
@@ -41,6 +41,7 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private boolean isConnected;
 
     private boolean isVisible;
+    private View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,17 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_news_list, container, false);
+
+
+        if (v != null){
+            ViewGroup parent = (ViewGroup) v.getParent();
+            if (parent != null)
+                parent.removeView(v);
+            return v;
+        }
+
+        v = inflater.inflate(R.layout.fragment_news_list, container, false);
+
         ButterKnife.bind(this, v);
 
         mRecyclerView.setHasFixedSize(true);
@@ -73,8 +84,6 @@ public class ListFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         isVisible = true;
-
-        doRefresh();
 
         return v;
     }
