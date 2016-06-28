@@ -8,7 +8,7 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/search"
+        android:icon="@drawable/ic_favorite_white_48dp"
+        android:title="@string/favorite"
         app:showAsAction="always"/>
 </menu>

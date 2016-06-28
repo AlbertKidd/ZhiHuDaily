@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
 import com.demo.kidd.zhihudaily.R;
-import com.demo.kidd.zhihudaily.ui.PickDateFragment;
+import com.demo.kidd.zhihudaily.ui.fragment.PickDateFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,11 +20,11 @@ import butterknife.ButterKnife;
 public class PickDateActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.date_picker_toolbar)
+    @BindView(R.id.basic_toolbar)
     Toolbar mDatePickerToolbar;
     @BindView(R.id.fragment_container)
     FrameLayout mFragmentContainer;
-    @BindView(R.id.pick_date_coordinator_layout)
+    @BindView(R.id.basic_coordinator_layout)
     CoordinatorLayout mPickDateCoordinatorLayout;
 
     private PickDateFragment mDateFragment;
@@ -32,7 +32,7 @@ public class PickDateActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pick_date);
+        setContentView(R.layout.basic_toobar_layout);
         ButterKnife.bind(this);
 
         mDatePickerToolbar.setTitle(R.string.date_pick);

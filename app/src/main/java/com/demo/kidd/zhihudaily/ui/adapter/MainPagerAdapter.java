@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.demo.kidd.zhihudaily.Constants;
-import com.demo.kidd.zhihudaily.ui.NewsListFragment;
+import com.demo.kidd.zhihudaily.ui.fragment.NewsListFragment;
 
 import java.util.Calendar;
 
@@ -55,6 +55,6 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
+        //super.destroyItem(container, position, object);
     }
 }

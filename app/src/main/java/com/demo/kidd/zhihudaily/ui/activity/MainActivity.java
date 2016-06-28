@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                return prepareIntent(SearchActivity.class);
+                return prepareIntent(FavoriteActivity.class);
             case R.id.action_setting:
                 return prepareIntent(PrefsActivity.class);
         }

@@ -3,6 +3,6 @@
     <string name="toolbar_title">「知报」 by Kidd</string>
     <string name="date_pick">选择日期</string>
     <string name="setting">设置</string>
-    <string name="search">搜索</string>
+    <string name="favorite">收藏夹</string>
     <string name="unconnected">无网络服务，请检查您的网络设置</string>
 </resources>

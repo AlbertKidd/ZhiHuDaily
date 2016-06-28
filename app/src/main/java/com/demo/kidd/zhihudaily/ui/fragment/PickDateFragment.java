@@ -1,4 +1,4 @@
-package com.demo.kidd.zhihudaily.ui;
+package com.demo.kidd.zhihudaily.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
