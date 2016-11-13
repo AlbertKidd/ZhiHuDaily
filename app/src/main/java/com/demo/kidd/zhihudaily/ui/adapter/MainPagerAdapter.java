@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
 
 import com.demo.kidd.zhihudaily.Constants;
 import com.demo.kidd.zhihudaily.ui.fragment.NewsListFragment;
@@ -16,7 +15,7 @@ import java.util.Calendar;
  */
 public class MainPagerAdapter extends FragmentStatePagerAdapter{
 
-    public static final int PAGE_COUNT = 7;
+    private static final int PAGE_COUNT = 7;
 
     public MainPagerAdapter(FragmentManager fm){
         super(fm);
@@ -25,18 +24,17 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter{
     @Override
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
-        Fragment newListFragment = new NewsListFragment();
+        Fragment newsListFragment = new NewsListFragment();
 
-        Calendar date = Calendar.getInstance();
-        date.add(Calendar.DAY_OF_YEAR, -position);
+        Calendar date = getDate(position);
         String formatDate = Constants.Dates.simpleDateFormat.format(date.getTime());
 
         bundle.putString(Constants.BundleKeys.DATE, formatDate);
         bundle.putBoolean(Constants.BundleKeys.IS_SINGLE, false);
         bundle.putBoolean(Constants.BundleKeys.IS_FIRST_PAGE, position==0);
 
-        newListFragment.setArguments(bundle);
-        return newListFragment;
+        newsListFragment.setArguments(bundle);
+        return newsListFragment;
     }
 
     @Override
@@ -46,15 +44,20 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public CharSequence getPageTitle(int position){
-        Calendar date = Calendar.getInstance();
-        date.add(Calendar.DAY_OF_YEAR, -position);
+        Calendar date = getDate(position);
         String showDate = Constants.Dates.cnDateFormat.format(date.getTime());
         return position == 0 ? "今天" : showDate;
     }
 
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        //super.destroyItem(container, position, object);
+    private Calendar getDate(int position){
+        Calendar date = Calendar.getInstance();
+        date.add(Calendar.DAY_OF_YEAR, -position);
+        return date;
     }
+
+
+//    @Override
+//    public void destroyItem(ViewGroup container, int position, Object object) {
+//        //super.destroyItem(container, position, object);
+//    }
 }

@@ -1,5 +1,11 @@
 package com.demo.kidd.zhihudaily.ui.fragment;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +18,7 @@ import android.view.ViewGroup;
 import com.demo.kidd.zhihudaily.R;
 import com.demo.kidd.zhihudaily.bean.Story;
 import com.demo.kidd.zhihudaily.ui.adapter.NewsAdapter;
+import com.demo.kidd.zhihudaily.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +41,14 @@ public class BaseListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     protected View v;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private ConnectionReceiver receiver;
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        receiver = new ConnectionReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        activity.registerReceiver(receiver, filter);
     }
 
     @Override
@@ -76,6 +87,21 @@ public class BaseListFragment extends Fragment implements SwipeRefreshLayout.OnR
         doRefresh();
     }
 
-    protected void doRefresh(){};
+    @Override
+    public void onDestroyView() {
+        getActivity().unregisterReceiver(receiver);
+        super.onDestroyView();
+    }
+
+    protected void doRefresh(){}
+
+    public class ConnectionReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Utility.checkNetworkConnection(context))
+                doRefresh();
+        }
+    }
+
 
 }

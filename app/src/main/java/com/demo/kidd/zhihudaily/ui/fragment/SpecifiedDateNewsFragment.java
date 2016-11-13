@@ -6,8 +6,8 @@ import android.view.View;
 
 import com.demo.kidd.zhihudaily.Constants;
 import com.demo.kidd.zhihudaily.R;
-import com.demo.kidd.zhihudaily.task.LoadNewsTask;
 import com.demo.kidd.zhihudaily.ui.activity.PickDateActivity;
+import com.demo.kidd.zhihudaily.utils.HttpUtil;
 import com.demo.kidd.zhihudaily.utils.Utility;
 
 import java.util.Date;
@@ -36,7 +36,8 @@ public class SpecifiedDateNewsFragment extends BaseListFragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (Utility.checkNetworkConnection(getActivity()))
-            new LoadNewsTask(formatDate, false, mNewsAdapter).execute();
+//            new LoadNewsTask(getActivity(), formatDate, false, mNewsAdapter).execute();
+            HttpUtil.load(getActivity(), formatDate, false, mNewsAdapter);
         else
             ((PickDateActivity)getActivity()).showSnackBar(R.string.unconnected);
     }
@@ -48,7 +49,8 @@ public class SpecifiedDateNewsFragment extends BaseListFragment {
         if(mSwipeRefreshLayout != null)
             mSwipeRefreshLayout.setRefreshing(true);
         if (isConnected){
-            new LoadNewsTask(formatDate, false, mNewsAdapter).execute();
+//            new LoadNewsTask(getActivity(), formatDate, false, mNewsAdapter).execute();
+            HttpUtil.load(getActivity(), formatDate, false, mNewsAdapter);
         }
         else
             ((PickDateActivity)getActivity()).showSnackBar(R.string.unconnected);

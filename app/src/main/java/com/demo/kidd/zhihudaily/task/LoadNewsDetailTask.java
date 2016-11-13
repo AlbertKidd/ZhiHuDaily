@@ -2,6 +2,7 @@ package com.demo.kidd.zhihudaily.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class LoadNewsDetailTask extends AsyncTask<Integer, Void, Question>{
     @Override
     protected void onPostExecute(Question question){
         String headerImage;
-        if (question.getImage() == null || question.getImage() == ""){
+        if (TextUtils.isEmpty(question.getImage())){
             headerImage = "file:///android_asset/news_detail_header_image.jpg";
         }else {
             headerImage = question.getImage();

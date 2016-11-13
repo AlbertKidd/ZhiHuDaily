@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 
 import com.demo.kidd.zhihudaily.Constants;
 import com.demo.kidd.zhihudaily.R;
-import com.demo.kidd.zhihudaily.task.LoadNewsTask;
 import com.demo.kidd.zhihudaily.ui.activity.MainActivity;
+import com.demo.kidd.zhihudaily.utils.HttpUtil;
 import com.demo.kidd.zhihudaily.utils.Utility;
 
 /**
@@ -63,7 +63,8 @@ public class NewsListFragment extends BaseListFragment{
         if(mSwipeRefreshLayout != null)
             mSwipeRefreshLayout.setRefreshing(true);
         if (isConnected){
-            new LoadNewsTask(date, isToday, mNewsAdapter).execute();
+//            new LoadNewsTask(getActivity(), date, isToday, mNewsAdapter).execute();
+            HttpUtil.load(getActivity(), date, isToday, mNewsAdapter);
         }
         else
             ((MainActivity)getActivity()).showSnackBar(R.string.unconnected);

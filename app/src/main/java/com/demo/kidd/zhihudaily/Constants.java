@@ -9,10 +9,6 @@ import java.util.Locale;
  */
 public class Constants {
 
-    public static final class Strings{
-
-    }
-
     public static final class Dates{
         public static final SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat("yyyyMMdd", Locale.CHINA);

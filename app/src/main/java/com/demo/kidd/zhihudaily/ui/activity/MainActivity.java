@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
+            case R.id.action_favorite:
                 return prepareIntent(FavoriteActivity.class);
-            case R.id.action_setting:
-                return prepareIntent(PrefsActivity.class);
+//            case R.id.action_setting:
+//                return prepareIntent(PrefsActivity.class);
         }
         return super.onOptionsItemSelected(item);
     }

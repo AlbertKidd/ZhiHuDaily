@@ -17,6 +17,7 @@ import com.demo.kidd.zhihudaily.DB.FavoriteDB;
 import com.demo.kidd.zhihudaily.R;
 import com.demo.kidd.zhihudaily.bean.Story;
 import com.demo.kidd.zhihudaily.task.LoadNewsDetailTask;
+import com.demo.kidd.zhihudaily.utils.HttpUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,7 +110,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
         intent.putExtra(Intent.EXTRA_TEXT,
-                "来自「知报」的分享：" + story.getTitle() + ",http://daily.zhihu.com/story/" + story.getId());
+                "来自「知报」的分享：" + story.getTitle() + HttpUtil.STORY_VIEW + story.getId());
         startActivity(Intent.createChooser(intent, story.getTitle()));
     }
 }

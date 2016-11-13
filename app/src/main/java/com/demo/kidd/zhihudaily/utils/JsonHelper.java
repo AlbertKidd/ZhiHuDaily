@@ -18,7 +18,7 @@ public class JsonHelper {
     public static List<Story> parseJsonToList(String json) throws JSONException{
         JSONObject content = new JSONObject(json);
         JSONArray newsArray = content.getJSONArray("stories");
-        List<Story> storyList = new ArrayList<Story>();
+        List<Story> storyList = new ArrayList<>();
         for (int i=0; i<newsArray.length(); i++){
             JSONObject singleNews = newsArray.getJSONObject(i);
             int id = singleNews.optInt("id");

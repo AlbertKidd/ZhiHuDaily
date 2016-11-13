@@ -1,5 +1,6 @@
 package com.demo.kidd.zhihudaily.task;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.demo.kidd.zhihudaily.bean.Story;
@@ -21,13 +22,16 @@ public class LoadNewsTask extends AsyncTask<Void, Void, List<Story>> {
     private OnFinishedListener mOnFinishedListener;
     private String date;
     private boolean istoday;
+    private Context mContext;
 
-    public LoadNewsTask(String date, boolean isToday, NewsAdapter adapter){
+    public LoadNewsTask(Context context, String date, boolean isToday, NewsAdapter adapter){
         super();
         this.date = date;
         this.istoday = isToday;
         this.mNewsAdapter = adapter;
+        mContext = context;
     }
+
 
     @Override
     protected List<Story> doInBackground(Void... params) {
@@ -37,11 +41,17 @@ public class LoadNewsTask extends AsyncTask<Void, Void, List<Story>> {
                 newsList = JsonHelper.parseJsonToList(HttpUtil.get());
             else
                 newsList = JsonHelper.parseJsonToList(HttpUtil.get(HttpUtil.NEWSLIST_BEFORE+date));
+
         }catch (IOException | JSONException e){
-            //e.printStackTrace();
+            e.printStackTrace();
         }finally {
             return newsList;
         }
+
+//        if (istoday)
+//            return HttpUtil.get(mContext);
+//        else
+//            return HttpUtil.get(mContext, HttpUtil.NEWSLIST_BEFORE + date);
     }
 
     @Override
