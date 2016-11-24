@@ -21,13 +21,10 @@ public class JsonHelper {
         List<Story> storyList = new ArrayList<>();
         for (int i=0; i<newsArray.length(); i++){
             JSONObject singleNews = newsArray.getJSONObject(i);
-            int id = singleNews.optInt("id");
-            String title = singleNews.optString("title");
-            String image = "";
+            Story story = new Gson().fromJson(singleNews.toString(), Story.class);
             if (singleNews.has("images"))
-                image = (String)singleNews.getJSONArray("images").get(0);
+                story.setImage(singleNews.getJSONArray("images").getString(0));
 
-            Story story = new Story(id, image, title);
             storyList.add(story);
         }
         return storyList;

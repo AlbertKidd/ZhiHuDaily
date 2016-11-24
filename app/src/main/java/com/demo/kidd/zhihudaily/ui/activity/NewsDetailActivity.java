@@ -7,20 +7,29 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.demo.kidd.zhihudaily.Constants;
 import com.demo.kidd.zhihudaily.DB.FavoriteDB;
 import com.demo.kidd.zhihudaily.R;
+import com.demo.kidd.zhihudaily.bean.Question;
 import com.demo.kidd.zhihudaily.bean.Story;
-import com.demo.kidd.zhihudaily.task.LoadNewsDetailTask;
-import com.demo.kidd.zhihudaily.utils.HttpUtil;
+import com.demo.kidd.zhihudaily.utils.JsonHelper;
+import com.demo.kidd.zhihudaily.utils.ObservableManager;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by niuwa on 2016/6/23.
@@ -57,7 +66,36 @@ public class NewsDetailActivity extends AppCompatActivity {
         initView();
 
         story = getIntent().getParcelableExtra(KEY_NEWS);
-        new LoadNewsDetailTask(this, mImageHeader, mTextTitle, mTextSource, mWebView).execute(story.getId());
+//        new LoadNewsDetailTask(this, mImageHeader, mTextTitle, mTextSource, mWebView).execute(story.getId());
+        ObservableManager.getDetailObservable(story.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        try{
+                            Question question = JsonHelper.parseJsonToDetail(s);
+
+                            String headerImage;
+                            if (TextUtils.isEmpty(question.getImage()))
+                                headerImage = Constants.URLs.DEFAULT_HEAD_IMAGE;
+                            else
+                                headerImage = question.getImage();
+                            Picasso.with(NewsDetailActivity.this)
+                                    .load(headerImage)
+                                    .into(mImageHeader);
+
+                            mTextTitle.setText(question.getTitle());
+                            mTextSource.setText(question.getImage_source());
+
+                            String newsContent = "<link rel=\"stylesheet\" type=\"text/css\" href=\"news_content_style.css\"/>"
+                                    + question.getBody().replace("<div class=\"img-place-holder\">", "");
+                            mWebView.loadDataWithBaseURL("file:///android_asset/", newsContent, "text/html", "utf-8", null);
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
         mFavoriteDB = new FavoriteDB(this);
         isFavorite = mFavoriteDB.isFavorite(story);
     }
@@ -110,7 +148,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
         intent.putExtra(Intent.EXTRA_TEXT,
-                "来自「知报」的分享：" + story.getTitle() + HttpUtil.STORY_VIEW + story.getId());
+                "来自「知报」的分享：" + story.getTitle() + Constants.URLs.STORY_VIEW + story.getId());
         startActivity(Intent.createChooser(intent, story.getTitle()));
     }
 }

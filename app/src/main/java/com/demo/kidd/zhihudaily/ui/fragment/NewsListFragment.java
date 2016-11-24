@@ -7,9 +7,17 @@ import android.view.ViewGroup;
 
 import com.demo.kidd.zhihudaily.Constants;
 import com.demo.kidd.zhihudaily.R;
+import com.demo.kidd.zhihudaily.bean.Story;
 import com.demo.kidd.zhihudaily.ui.activity.MainActivity;
-import com.demo.kidd.zhihudaily.utils.HttpUtil;
+import com.demo.kidd.zhihudaily.utils.JsonHelper;
+import com.demo.kidd.zhihudaily.utils.ObservableManager;
 import com.demo.kidd.zhihudaily.utils.Utility;
+
+import java.util.List;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by niuwa on 2016/6/21.
@@ -64,7 +72,21 @@ public class NewsListFragment extends BaseListFragment{
             mSwipeRefreshLayout.setRefreshing(true);
         if (isConnected){
 //            new LoadNewsTask(getActivity(), date, isToday, mNewsAdapter).execute();
-            HttpUtil.load(getActivity(), date, isToday, mNewsAdapter);
+//            HttpUtil.load(getActivity(), date, isToday, mNewsAdapter);
+            ObservableManager.getStoryListObservable(date, isToday)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<String>() {
+                        @Override
+                        public void call(String s) {
+                            try {
+                                List<Story> storyList = JsonHelper.parseJsonToList(s);
+                                mNewsAdapter.refreshStoryList(storyList);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    });
         }
         else
             ((MainActivity)getActivity()).showSnackBar(R.string.unconnected);

@@ -9,6 +9,14 @@ import java.util.Locale;
  */
 public class Constants {
 
+    public static final class URLs{
+        public static String NEWSLIST_LATEST = "http://news-at.zhihu.com/api/4/news/latest";
+        public static String NEWSLIST_BEFORE = "http://news-at.zhihu.com/api/4/news/before/";
+        public static String STORY_VIEW = "http://daily.zhihu.com/story/";
+        public static String NEWSDETAIL = "http://news-at.zhihu.com/api/4/news/";
+        public static String DEFAULT_HEAD_IMAGE  = "file:///android_asset/news_detail_header_image.jpg";
+    }
+
     public static final class Dates{
         public static final SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
